@@ -1,0 +1,30 @@
+# Dungeons and Dragons R Functions
+# Authors: Benjamin Reissman
+# Created May 28, 2018; Last updated November 26, 2018
+
+# Big Generator, 100 characters. Cheats by using relevant bell curve probability rather than really rolling 4 dice and keeping the best 3.
+stats6 <- 
+  matrix(data = sample(x = 3:18, size = 600, replace = T, prob = c(0.000771605, 0.00308642, 0.007716049, 0.016203704, 
+  0.029320988, 0.047839506, 0.070216049, 0.094135802, 0.114197531, 0.128858025, 0.132716049, 0.12345679, 0.101080247, 
+  0.072530864, 0.041666667, 0.016203704)), nrow = 100, ncol = 6, byrow = T, dimnames = list(c(),c("Str","Dex","Con","Int","Wis","Cha")))
+
+CharGen <- function(HowManyChars = 1, Save = TRUE, Print = TRUE){ # Simulates rolling 4 six-sided dice and saving the values of the top 3, using bell curve probability.
+  CharList <- matrix(data = sample(x = 3:18, size = HowManyChars * 6, replace = T, prob = c(0.000771605, 0.00308642, 0.007716049, 0.016203704, 0.029320988, 0.047839506, 0.070216049, 0.094135802, 0.114197531, 0.128858025, 0.132716049, 0.12345679, 0.101080247, 0.072530864, 0.041666667, 0.016203704)), nrow = HowManyChars, ncol = 6, byrow = T, dimnames = list(c(),c("Strength","Dexterity","Constitution","Intelligence","Wisdom","Charisma")))
+  if (Save == T){ # Do you want to save your rolls into R's memory?
+    assign(x = "CharList", value = CharList, envir = .GlobalEnv) } else {}
+  if (Print == T) { # Do you want to print your rolls into R's output? Perhaps not, if you just want to roll 1000 characters and feed it into a machine in the background.
+    print(CharList)} }
+
+# Mixed Dice Rollers
+D <- function(dice1 = 1, top1 = 20, dice2 = 0, top2 = 20, dice3 = 0, top3 = 20, All) {
+  All <- c((sample(1:top1, size = dice1, replace = T)), sample(1:top2, size = dice2, 
+  replace = T), sample(1:top3, size = dice3, replace = T))  All}
+  # Rolls dice of up to three different sizes for you, of unlimited count (dice) and sizes (top). Then presents the list.
+
+DS <- function(dice1 = 1, top1 = 20, dice2 = 0, top2 = 20, dice3 = 0, top3 = 20, All) {
+  sum(c(sample(1:top1, size = dice1, replace = T)), sample(1:top2, size = dice2, 
+  replace = T), sample(1:top3, size = dice3, replace = T)) }
+  # Rolls and sums dice of up to three different sizes for you, of unlimited count (dice) and sizes (top). Then presents the list.
+
+# Experiments with actual best-3-of-4 dice roll simulation / sampling:
+head(x = sort(sample(x = c(1:6), size = 4, replace = T), decreasing = T), n = 3)
